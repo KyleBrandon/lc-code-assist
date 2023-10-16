@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "lib": ["es2018", "esnext", "dom"],
+        "module": "commonjs",
+        "target": "es2018",
+        "esModuleInterop": true,
+        "strictNullChecks": true,
+        "outDir": "./dist",
+        "types": ["node", "prompt-sync"],
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "rootDirs": ["src"]
+    },
+    "include": ["src"]
+}
