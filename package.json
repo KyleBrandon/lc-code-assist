@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "dev": "yarn build --watch --preserveWatchOutput",
-        "run": "node dist/index.js",
+        "run": "node dist/src/index.js",
         "lint": "eslint src --ext js,ts",
         "test": "jest"
     },

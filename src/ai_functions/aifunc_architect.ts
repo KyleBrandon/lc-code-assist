@@ -1,7 +1,7 @@
-import { PromptTemplate } from 'langchain/prompts';
+import { SystemMessage } from 'langchain/schema';
 
-export const printProjectScope = PromptTemplate.fromTemplate(
-    `FUNCTION: printProjectScope
+export const printProjectScope = `printProjectScope(INPUT)
+BEGIN
 /// Input: Takes in a user request to build a website project description
 /// Purpose: Converts user request into JSON response of information items required for a website build.
 /// Important: At least one of the bool results must be true
@@ -27,11 +27,11 @@ export const printProjectScope = PromptTemplate.fromTemplate(
 ///     "is_user_login_and_logout": false
 ///     "is_external_urls_required": bool false
 ///   END
-/// console.log(OUTPUT);`,
-);
+/// console.log(OUTPUT);
+END`;
 
-export const printSiteUrls = PromptTemplate.fromTemplate(
-    `FUNCTION: printSiteUrls
+export const printSiteUrls = `printSiteUrls(INPUT)
+BEGIN
 /// Input: Takes in a project description of a website build
 /// Function: Outputs a list of external public API endpoints that should be used in the building of the website
 /// Important: Only selects url endpoint(s) which do not require any API Keys at all
@@ -41,5 +41,5 @@ export const printSiteUrls = PromptTemplate.fromTemplate(
 ///   website_team_spec = "website_purpose: Some('Provides Crypto Price Data from Binance and Kraken',)"
 ///   prints:
 /// ["https://api.binance.com/api/v3/exchangeInfo", "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d"]
-/// console.log(OUTPUT);`,
-);
+/// console.log(OUTPUT);
+END`;

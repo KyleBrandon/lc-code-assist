@@ -11,8 +11,7 @@ export enum PrintCommand {
 export class CommandLine {
     /// Get the user request.
     //
-    public getUserResponse(question: string): string {
-        console.log(chalk.blue);
+    public static getUserResponse(question: string): string {
         let answer = prompt(chalk.blue(question));
         if (!answer) {
             answer = 'Invalid answer';
@@ -20,22 +19,22 @@ export class CommandLine {
         return answer;
     }
 
-    public printAgentMessage(
+    public static printAgentMessage(
         command: PrintCommand,
         agentPosition: string,
         agentStatement: string,
     ): void {
-        // Print the agent position in green
-        console.log(chalk.green(`Agent: ${agentPosition}`));
+        // Get the color for the 'command'
+        const printInColor = CommandLine.getStatementColor(command);
 
-        const printInColor = this.getStatementColor(command);
-        console.log(printInColor(agentStatement));
-
-        // Print the agent statement in the specified color
-        console.log();
+        // Print the agent position in green and the agent statement in the command color
+        console.log(
+            chalk.green(`Agent: ${agentPosition}: `) +
+                printInColor(agentStatement),
+        );
     }
 
-    private getStatementColor(
+    private static getStatementColor(
         command: PrintCommand,
     ): (output: string) => string {
         if (command === PrintCommand.Issue) {

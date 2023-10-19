@@ -1,13 +1,11 @@
 import { CommandLine } from './helpers/CommandLine';
 
 function main() {
-    const cmdLine = new CommandLine();
-
-    const response = cmdLine.getUserResponse(
+    const response = CommandLine.getUserResponse(
         'What webserver are we building today? ',
     );
 
-    console.log();
+    console.log(response);
 }
 
 main();
