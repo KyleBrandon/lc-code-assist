@@ -1,37 +1,37 @@
 import { SystemMessage } from 'langchain/schema';
 
 export const printProjectScope = `printProjectScope(INPUT)
-BEGIN
+{{
 /// Input: Takes in a user request to build a website project description
 /// Purpose: Converts user request into JSON response of information items required for a website build.
 /// Important: At least one of the bool results must be true
 /// Output: Prints an object response in the following format:
-///   BEGIN
+///   {{
 ///     "is_crud_required": bool, // true if site needs CRUD functionality
 ///     "is_user_login_and_logout": bool // true if site needs users to be able to log in and log out
 ///     "is_external_urls_required": bool // true if site needs to fetch data from third part providers
-///   END
+///   }}
 /// Example 1:
 ///   user_request = "I need a full stack website that accepts users and gets stock price data"
 ///   prints:
-///   BEGIN
+///   {{
 ///     "is_crud_required": true
 ///     "is_user_login_and_logout": true
 ///     "is_external_urls_required": bool true
-///   END
+///   }}
 /// Example 2:
 ///   user_request = "I need a simple TODO app"
 ///   prints:
-///   BEGIN
+///   {{
 ///     "is_crud_required": true
 ///     "is_user_login_and_logout": false
 ///     "is_external_urls_required": bool false
-///   END
+///   }}
 /// console.log(OUTPUT);
-END`;
+}}`;
 
 export const printSiteUrls = `printSiteUrls(INPUT)
-BEGIN
+{{
 /// Input: Takes in a project description of a website build
 /// Function: Outputs a list of external public API endpoints that should be used in the building of the website
 /// Important: Only selects url endpoint(s) which do not require any API Keys at all
@@ -42,4 +42,4 @@ BEGIN
 ///   prints:
 /// ["https://api.binance.com/api/v3/exchangeInfo", "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d"]
 /// console.log(OUTPUT);
-END`;
+}}`;
