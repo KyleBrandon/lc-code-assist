@@ -4,9 +4,15 @@ import {
 } from '../ai_functions/aifunc_architect';
 import { CommandLine, PrintCommand } from '../helpers/CommandLine';
 import { aiTaskRequestDecoded, checkURLStatusCode } from '../helpers/general';
-import { AgentState, BasicAgent, FactSheet, ProjectScope } from './BasicAgent';
+import {
+    AgentState,
+    BasicAgent,
+    DynamicAgent,
+    FactSheet,
+    ProjectScope,
+} from './BasicAgent';
 
-export class ArchitectAgent extends BasicAgent {
+export class ArchitectAgent extends BasicAgent implements DynamicAgent {
     public constructor() {
         super(
             'Gathers information and design solutions for website development',

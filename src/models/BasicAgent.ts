@@ -27,6 +27,10 @@ export enum AgentState {
     Finished,
 }
 
+export interface DynamicAgent {
+    execute(factSheet: FactSheet): Promise<void>;
+}
+
 export abstract class BasicAgent {
     public objective: string;
     public position: string;
@@ -39,6 +43,4 @@ export abstract class BasicAgent {
         this.state = AgentState.Discovery;
         this.memory = [];
     }
-
-    public abstract execute(factSheet: FactSheet): Promise<void>;
 }
