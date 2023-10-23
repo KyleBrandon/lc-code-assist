@@ -14,5 +14,5 @@ describe('ManagingAgent Tests', () => {
         ).toBeTruthy();
 
         console.log(agent.factsheet);
-    });
+    }, 10000);
 });

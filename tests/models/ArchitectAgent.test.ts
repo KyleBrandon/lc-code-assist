@@ -38,4 +38,18 @@ describe('ArchitectAgent Tests', () => {
         expect(agent.state).toEqual(AgentState.Finished);
         expect(factsheet.projectScope?.is_external_urls_required).toBeTruthy();
     });
+    test('Architect a site that requires CRUD, authentication, and external URLs', async () => {
+        const agent: ArchitectAgent = new ArchitectAgent();
+        const factsheet: FactSheet = {
+            projectDescription:
+                'build a website that fetches and trackes fitness progress and saves timezone information',
+        };
+
+        expect(agent.state).toEqual(AgentState.Discovery);
+        await agent.execute(factsheet);
+        expect(agent.state).toEqual(AgentState.Finished);
+        expect(factsheet.projectScope?.is_crud_required).toBeTruthy();
+        expect(factsheet.projectScope?.is_user_login_and_logout).toBeTruthy();
+        expect(factsheet.projectScope?.is_external_urls_required).toBeTruthy();
+    });
 });

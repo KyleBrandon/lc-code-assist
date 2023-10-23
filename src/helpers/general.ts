@@ -6,6 +6,14 @@ import {
 import { PrintCommand, CommandLine } from './CommandLine';
 import { ChatLLM } from '../apis/ChatLLM';
 import fs from 'node:fs';
+import { promisify } from 'util';
+import {
+    exec,
+    ExecOptions,
+    ExecException,
+    ChildProcess,
+    PromiseWithChild,
+} from 'node:child_process';
 
 const CODE_TEMPLATE_PATH: string =
     '/Users/kyle/workspaces/rust/rust_autogpt/web_template/src/code_template.rs';
@@ -13,6 +21,8 @@ const EXECUTE_MAIN_PATH: string =
     '/Users/kyle/workspaces/rust/rust_autogpt/web_template/src/main.rs';
 const API_SCHEMA_PATH: string =
     '/Users/kyle/workspaces/rust/rust_autogpt/auto_gippity/schemas/api_schema.json';
+const WEB_SERVER_PROJECT_PATH: string =
+    '/Users/kyle/workspaces/rust/rust_autogpt/web_template/';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getSystemMessagePrompt(
@@ -58,6 +68,11 @@ export async function aiTaskRequest(
     return result;
 }
 
+export function deserialize<T>(contents: string): T {
+    const deserializedResponse: T = JSON.parse(contents);
+    return deserializedResponse;
+}
+
 // Performs call to LLM GPT - Decoded
 export async function aiTaskRequestDecoded<T>(
     messageContext: string,
@@ -72,8 +87,7 @@ export async function aiTaskRequestDecoded<T>(
         functionPass,
     );
 
-    const deserializedResponse: T = JSON.parse(response);
-    return deserializedResponse;
+    return deserialize<T>(response);
 }
 
 // Check whether request url is valid
@@ -83,10 +97,12 @@ export async function checkURLStatusCode(url: string): Promise<number> {
 }
 
 function readFile(path: string): string {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
     return fs.readFileSync(path, 'utf8');
 }
 
 function writeFile(path: string, contents: string): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     fs.writeFileSync(path, contents);
 }
 
@@ -108,4 +124,54 @@ export function saveBackendCode(contents: string) {
 // Save JSON API Endpoint Schema
 export function saveAPIEndpoints(apiEndpoints: string) {
     writeFile(API_SCHEMA_PATH, apiEndpoints);
+}
+
+export interface ExecResponse {
+    message?: string;
+    child?: ChildProcess;
+}
+
+function runProcess(
+    command: string,
+    currentWorkingDirectory: string,
+): Promise<ExecResponse> {
+    return new Promise<ExecResponse>((resolve, reject) => {
+        const options: ExecOptions = {
+            cwd: currentWorkingDirectory,
+        };
+
+        const response: ExecResponse = {};
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
+        response.child = exec(
+            command,
+            options,
+            (error, stdout: string, stderr: string) => {
+                if (error) {
+                    response.message = stderr;
+                    reject(response);
+                } else {
+                    if (stderr) {
+                        response.message = stderr;
+                        reject(response);
+                    } else {
+                        response.message = stdout;
+                    }
+                }
+                resolve(response);
+            },
+        );
+    });
+}
+
+export async function execCargoBuild(): Promise<ExecResponse> {
+    return await runProcess('cargo build', WEB_SERVER_PROJECT_PATH);
+}
+
+export async function execCargoRun(): Promise<ExecResponse> {
+    return await runProcess('cargo run', WEB_SERVER_PROJECT_PATH);
+}
+
+export async function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }

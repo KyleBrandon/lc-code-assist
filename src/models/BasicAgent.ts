@@ -1,24 +1,24 @@
-export type RouteObject = {
+export interface RouteObject {
     is_route_dynamic: boolean;
     method: string;
     request_body: object;
     response: object;
     route: object;
-};
+}
 
-export type ProjectScope = {
+export interface ProjectScope {
     is_crud_required: boolean;
     is_user_login_and_logout: boolean;
     is_external_urls_required: boolean;
-};
+}
 
-export type FactSheet = {
+export interface FactSheet {
     projectDescription: string;
     projectScope?: ProjectScope;
     externalURLs?: string[];
     backendCode?: string;
-    apiEndpointSchema?: string[];
-};
+    apiEndpointSchema?: RouteObject[];
+}
 
 export enum AgentState {
     Discovery,

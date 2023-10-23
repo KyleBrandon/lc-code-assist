@@ -2,8 +2,6 @@ import {
     checkURLStatusCode,
     readCodeTemplate,
     readExecMain,
-    saveBackendCode,
-    saveAPIEndpoints,
 } from '../../src/helpers/general';
 
 describe('General', () => {
@@ -14,7 +12,7 @@ describe('General', () => {
 
     test('readExecMain', () => {
         const result = readExecMain();
-        expect(result).toContain('println!');
+        expect(result).toContain('async fn main');
     });
 
     test('Get URL status code', async () => {
