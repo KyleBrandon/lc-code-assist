@@ -1,20 +1,21 @@
 import { SystemMessage } from 'langchain/schema';
 
 export const printBackendWebserverCode = `printBackendWebserverCode(INPUT)
-BEGIN
+{{
 /// INPUT: Takes in a PROJECT_DESCRIPTION and CODE_TEMPLATE for a website backend build
 /// IMPORTANT: The backend code is ONLY an example. If the Project Description requires it, make as many changes as you like.
 /// IMPORTANT: You do not need to follow the backend code exactly. Write functions that make sense for the users request if required.
+/// VERY IMPORTANT: YOU DO NOT NEED TO FOLLOW THE BACKEND CODE EXACTLY. USE THE BACKEND CODE AS AN EXAMPLE. IF YOU NEED TO CHANGE IT, CHANGE IT.
 /// FUNCTION: Takes an existing set of code marked as CODE_TEMPLATE and updates or re-writes it to work for the purpose in the PROJECT_DESCRIPTION
 /// IMPORTANT: The following libraries are already installed
 ///   reqwest, serde, serde_json, tokio, actix-web, async-trait, actix_cors
-/// No other external libraries should be used. Write functions that fit with the description from the PROJECT_DESCRIPTION
+/// You can install any other libraries that are necessary to complete the project. Write functions that fit with the description from the PROJECT_DESCRIPTION
 /// OUTPUT: Print ONLY the code, nothing else. This function ONLY prints code.
 console.log(OUTPUT);
-END`;
+}}`;
 
 export const printImprovedWebServerCode = `printImprovedWebServerCode(INPUT)
-BEGIN
+{{
 /// INPUT: Takes in a PROJECT_DESCRIPTION and CODE_TEMPLATE for a website backend build
 /// FUNCTION: Performs the following tasks:
 ///   1. Removes any bugs in the code and adds minor additional functionality
@@ -23,18 +24,18 @@ BEGIN
 /// IMPORTANT: The following libraries are already installed. Does not use ANY libraries other than what was provided in the template
 ///   reqwest, serde, serde_json, tokio, actix-web, async-trait
 console.log(OUTPUT);
-END`;
+}}`;
 
 export const printFixedCode = `printFixedCode(INPUT)
-BEGIN
+{{
 /// INPUT: Takes in Rust BROKEN_CODE and the ERROR_BUGS found
 /// FUNCTION: Removes bugs from code
 /// IMPORTANT: Only prints out the new and improved code. No commentary or anything else
 console.log(OUTPUT);
-END`;
+}}`;
 
 export const printRestAPIEndpoints = `printRestAPIEndpoints(INPUT)
-BEGIN
+{{
 /// INPUT: Takes in Rust webserver CODE_INPUT based on actix-web
 /// FUNCTION: Prints out the JSON schema for url endpoints and their respective types
 /// LOGIC: Script analyses all code and can categorize into the following object keys:
@@ -109,4 +110,4 @@ BEGIN
 ///   ... // etc
 /// ]
 console.log(OUTPUT);}}
-END`;
+}}`;

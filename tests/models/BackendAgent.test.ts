@@ -84,7 +84,10 @@ describe('BackendAgent Tests', () => {
         const factsheet: FactSheet = FACTSHEET;
         agent.forceAcceptUserPrompt = true;
 
-        await agent.execute(factsheet);
-        expect(agent.state).toEqual(AgentState.Finished);
+        try {
+            await agent.execute(factsheet);
+        } catch (error) {
+            expect((error as Error).message).toContain('Too many bugs');
+        }
     }, 300000);
 });

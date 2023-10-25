@@ -8,6 +8,7 @@ import {
     execCargoBuild,
     execCargoRun,
     ExecResponse,
+    killProcess,
     readCodeTemplate,
     readExecMain,
     saveBackendCode,
@@ -271,9 +272,7 @@ export class BackendAgent extends BasicAgent implements DynamicAgent {
                         try {
                             await this.testEndpoints(filteredEndpoints);
                         } catch (error) {
-                            if (runResult.child) {
-                                runResult.child.kill();
-                            }
+                            killProcess(runResult);
 
                             const message = (error as Error).message;
 
@@ -291,9 +290,7 @@ export class BackendAgent extends BasicAgent implements DynamicAgent {
                             'Backend testing complete...',
                         );
 
-                        if (runResult.child) {
-                            runResult.child.kill();
-                        }
+                        killProcess(runResult);
                         this.state = AgentState.Finished;
                     }
                     break;

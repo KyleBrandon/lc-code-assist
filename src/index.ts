@@ -1,11 +1,20 @@
 import { CommandLine } from './helpers/CommandLine';
+import { ManagingAgent } from './models/ManagingAgent';
 
-function main() {
-    const response = CommandLine.getUserResponse(
-        'What webserver are we building today? ',
+async function main() {
+    const userRequest = CommandLine.getUserResponse(
+        'What website are we building today? ',
     );
 
-    console.log(response);
+    const agent = await ManagingAgent.new(userRequest);
+
+    await agent.executeProject();
 }
 
-main();
+main()
+    .then(() => {
+        console.log('Finished building the website.');
+    })
+    .catch((error) => {
+        console.log(error);
+    });

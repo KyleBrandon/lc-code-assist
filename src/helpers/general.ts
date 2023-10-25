@@ -6,14 +6,7 @@ import {
 import { PrintCommand, CommandLine } from './CommandLine';
 import { ChatLLM } from '../apis/ChatLLM';
 import fs from 'node:fs';
-import { promisify } from 'util';
-import {
-    exec,
-    ExecOptions,
-    ExecException,
-    ChildProcess,
-    PromiseWithChild,
-} from 'node:child_process';
+import { exec, ExecOptions, ChildProcess } from 'node:child_process';
 
 const CODE_TEMPLATE_PATH: string =
     '/Users/kyle/workspaces/rust/rust_autogpt/web_template/src/code_template.rs';
@@ -69,6 +62,7 @@ export async function aiTaskRequest(
 }
 
 export function deserialize<T>(contents: string): T {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const deserializedResponse: T = JSON.parse(contents);
     return deserializedResponse;
 }
@@ -162,6 +156,13 @@ function runProcess(
             },
         );
     });
+}
+
+export function killProcess(execResponse: ExecResponse): void {
+    if (execResponse.child) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        execResponse.child.kill();
+    }
 }
 
 export async function execCargoBuild(): Promise<ExecResponse> {
